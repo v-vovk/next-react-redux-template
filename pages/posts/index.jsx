@@ -1,10 +1,11 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 
-import { fetchPosts } from '../redux/actions/postsActions'
+import { fetchPosts } from '../../redux/actions/postsActions'
 
-export default function Home() {
+const Posts = () => {
   const dispatch = useDispatch()
   const { posts } = useSelector((state) => state.posts)
 
@@ -15,19 +16,25 @@ export default function Home() {
   return (
     <div className='container'>
       <Head>
-        <title>Create Next App</title>
+        <title>Posts page</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
       <main>
-        <h1 className='title'>
-          Welcome to <a href='https://nextjs.org'>Next.js!</a>
-        </h1>
+        <h1 className='title'>Posts Page</h1>
         {posts &&
           posts.map((post) => {
-            return <h1 key={post}>{post}</h1>
+            return (
+              <Link href='/posts/[id]' as={`/posts/${post}`} key={post}>
+                <a style={{ color: 'red' }}>
+                  <h1>{post}</h1>
+                </a>
+              </Link>
+            )
           })}
       </main>
     </div>
   )
 }
+
+export default Posts
